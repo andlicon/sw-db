@@ -42,17 +42,17 @@ class ItemType(enum.Enum):
     character = 0
     planet = 1
 
-class Item(Base):
-    __tablename__ = 'items'
+# class Item(Base):
+#     __tablename__ = 'items'
 
-    # attributes
-    id = Column('id', Integer, primary_key=True)
-    idCharacter = Column('idCharacter', Integer, unique=True)
-    idPlanet = Column('idPlanet', Integer, unique=True)
+#     # attributes
+#     id = Column('id', Integer, primary_key=True)
+#     idCharacter = Column('idCharacter', Integer, unique=True)
+#     idPlanet = Column('idPlanet', Integer, unique=True)
 
-    # relationship
-    characters = relationship('Character', back_populates='items')
-    planets = relationship('Planet', back_populates='items')
+#     # relationship
+#     characters = relationship('Character', back_populates='items')
+#     planets = relationship('Planet', back_populates='items')
 
 class Character(Base):
     __tablename__ = 'characters'
@@ -97,11 +97,18 @@ class Favorite(Base):
     # attributes
     id = Column('id', Integer, primary_key=True)
     userId = Column('userId', ForeignKey('users.id'), nullable=False)
-    itemId = Column('itemId', ForeignKey('items.id'), nullable=False)
+    # itemId = Column('itemId', ForeignKey('items.id'), nullable=False)
+    idCharacter = Column('idCharacter', Integer, ForeignKey('characters.id'), unique=True)
+    idPlanet = Column('idPlanet', Integer, ForeignKey('planets.id'), unique=True)
+
+#     # relationship
+    characters = relationship('Character', back_populates='items')
+    planets = relationship('Planet', back_populates='items')
+
 
     # relationships
     user = relationship('User', back_populates='favorites')
-    item = relationship('Item', back_populates='favorites')
+    # item = relationship('Item', back_populates='favorites')
 
 
 ## Draw from SQLAlchemy base
